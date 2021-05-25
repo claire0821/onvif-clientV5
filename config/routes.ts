@@ -49,11 +49,36 @@
                   },
                 ],
               },
+              //onvif
               {
-                name: 'list.table-list',
-                icon: 'table',
-                path: '/list',
-                component: './TableList',
+                name: 'onvif.video',
+                icon: 'Youtube',
+                path: '/video',
+                component: './Video',
+              },
+              {
+                name: 'onvif.devices-management',
+                icon: 'Camera',
+                path: '/devices-management',
+                component: './devices-management',
+              },
+              {
+                name: 'onvif.device-info',
+                icon: 'Camera',
+                path: '/device-info',
+                component: './device-info',
+              },
+              {
+                name: 'onvif.media-info',
+                icon: 'Camera',
+                path: '/media-info',
+                component: './media-info',
+              },
+              {
+                name: 'onvif.ptz-info',
+                icon: 'Camera',
+                path: '/ptz-info',
+                component: './ptz-info',
               },
               {
                 component: './404',

@@ -49,4 +49,9 @@ export default {
   'menu.editor.flow': '流程编辑器',
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
+  'menu.onvif.video': '视频预览',
+  'menu.onvif.devices-management': '设备管理',
+  'menu.onvif.device-info': '设备信息',
+  'menu.onvif.media-info': '媒体信息',
+  'menu.onvif.ptz-info': '云台信息',
 };

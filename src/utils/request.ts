@@ -2,7 +2,7 @@
 import { extend } from 'umi-request';
 import { notification } from 'antd';
 
-const codeMessage: Record<number, string> = {
+const codeMessage: { [status: number]: string } = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
   202: '一个请求已经进入后台排队（异步任务）。',
@@ -20,10 +20,7 @@ const codeMessage: Record<number, string> = {
   504: '网关超时。',
 };
 
-/**
- * @zh-CN 异常处理程序
- * @en-US Exception handler
- */
+/** 异常处理程序 */
 const errorHandler = (error: { response: Response }): Response => {
   const { response } = error;
   if (response && response.status) {
@@ -31,25 +28,40 @@ const errorHandler = (error: { response: Response }): Response => {
     const { status, url } = response;
 
     notification.error({
-      message: `Request error ${status}: ${url}`,
+      message: `请求错误 ${status}: ${url}`,
       description: errorText,
     });
   } else if (!response) {
     notification.error({
-      description: 'Your network is abnormal and cannot connect to the server',
-      message: 'Network anomaly',
+      description: '您的网络发生异常，无法连接服务器',
+      message: '网络异常',
     });
   }
   return response;
 };
 
-/**
- * @en-US Configure the default parameters for request
- * @zh-CN 配置request请求时的默认参数
- */
+/** 配置request请求时的默认参数 */
 const request = extend({
-  errorHandler, // default error handling
-  credentials: 'include', // Does the default request bring cookies
+  errorHandler, // 默认错误处理
+  credentials: 'include', // 默认请求是否带上cookie
 });
 
-export default request;
+const requestBackJson = extend({
+  prefix: 'http://192.168.1.221:9999/onvif', // 前缀, 一般用于覆盖统一设置的 prefix
+  errorHandler, // 默认错误处理
+  timeout: 15000, // 超时
+  responseType: 'json',
+});
+// // request拦截
+// requestBackJson.interceptors.request.use((url, options) => {
+//   return {
+//     url: `${url}&interceptors=yes`,
+//     options: { ...options, interceptors: true },
+//   };
+// })
+// // response拦截器, 处理response
+// request.interceptors.response.use(response => {
+//   return response.data;
+// });
+
+export { request, requestBackJson };
